@@ -20,13 +20,22 @@ public class ConsumerApplication {
 
     @RabbitListener(queues = "fanout_queue_1")
     public void onFanoutQueue1(String msg) {
-        log.info("Receive: {}", msg);
+        log.info("Receive1: {}", msg);
     }
 
 
     @RabbitListener(queues = "fanout_queue_2")
     public void onFanoutQueue2(String msg) {
-        log.info("Receive: {}", msg);
+        log.info("Receive2: {}", msg);
     }
 
+    @RabbitListener(queues = "topic_queue_1")
+    public void onTopicQueue1(String msg) {
+        log.info("Receive1: {}", msg);
+    }
+
+    @RabbitListener(queues = "topic_queue_2")
+    public void onTopicQueue2(String msg) {
+        log.info("Receive2: {}", msg);
+    }
 }
