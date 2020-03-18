@@ -13,9 +13,20 @@ public class ConsumerApplication {
         SpringApplication.run(ConsumerApplication.class, args);
     }
 
-    @RabbitListener(queues = "my_queue")
-    public void onListener(String msg) {
+    @RabbitListener(queues = "direct_queue")
+    public void onDirectQueue(String msg) {
     	log.info("Receive: {}", msg);
+    }
+
+    @RabbitListener(queues = "fanout_queue_1")
+    public void onFanoutQueue1(String msg) {
+        log.info("Receive: {}", msg);
+    }
+
+
+    @RabbitListener(queues = "fanout_queue_2")
+    public void onFanoutQueue2(String msg) {
+        log.info("Receive: {}", msg);
     }
 
 }
