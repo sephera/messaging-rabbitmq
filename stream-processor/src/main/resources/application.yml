@@ -10,6 +10,9 @@ spring:
                 username: ad
                 password: pw
       bindings:
-        output:
+        input:
           destination: queue.stream.name
+          binders: local_rabbit
+        output:
+          destination: queue.stream.person
           binders: local_rabbit

@@ -1,12 +1,16 @@
 package com.example.streamproducer;
 
+import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.support.MessageBuilder;
 
-@EnableBinding(Sink.class)
+@Log4j2
+@EnableBinding(Source.class)
 @SpringBootApplication
 public class StreamProducerApplication {
 
@@ -14,21 +18,12 @@ public class StreamProducerApplication {
         SpringApplication.run(StreamProducerApplication.class, args);
     }
 
-    @StreamListener(Sink.INPUT)
-    public void handle(Person person) {
-        System.out.println("Received: " + person);
+    @Bean
+    public ApplicationRunner onReady(Source source) {
+        return args -> {
+            source.output().send(MessageBuilder.withPayload("John snow").build());
+            log.info("Send event completed!");
+        };
     }
 
-    public static class Person {
-        private String name;
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
-        public String toString() {
-            return this.name;
-        }
-    }
 }
